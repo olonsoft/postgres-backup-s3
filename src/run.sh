@@ -9,5 +9,5 @@ fi
 if [ -z "$SCHEDULE" ]; then
   sh backup.sh
 else
-  exec go-cron "$SCHEDULE" /bin/sh backup.sh
+  echo "${SCHEDULE} /bin/sh backup.sh" > /etc/crontabs/root && crond -f -d 8
 fi

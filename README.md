@@ -1,18 +1,29 @@
 # Introduction
-This project provides Docker images to periodically back up a PostgreSQL database to AWS S3, and to restore from the backup as needed.
+This project provides Docker images to periodically back up a PostgreSQL database to AWS S3 or to Minio, and to restore from the backup as needed.
+
+> Forked from [eeshugerman/postgres-backup-s3](https://github.com/eeshugerman/postgres-backup-s3)> 
+
+### Made the following changes:
+- Removed dependency of  `go-cron` and used the standard busybox `crond`
+- Removed `pip3` installation because the next is not needed anymore
+- Removed installation of `awscli`. Instead I used  the built in `apk add --no-cache aws-cli`
+- Also `python3` is not needed anymore
+- Added support for postgres16. Currently only supported on `alpine:edge`
+
+> NOTE: Tested only on `minio` and not on `AWS S3`
 
 # Usage
 ## Backup
 ```yaml
 services:
   postgres:
-    image: postgres:13
+    image: postgres:16.0-alpine3.18
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
 
   backup:
-    image: eeshugerman/postgres-backup-s3:15
+    image: eeshugerman/postgres-backup-s3:16
     environment:
       SCHEDULE: '@weekly'     # optional
       BACKUP_KEEP_DAYS: 7     # optional
@@ -28,7 +39,7 @@ services:
       POSTGRES_PASSWORD: password
 ```
 
-- Images are tagged by the major PostgreSQL version supported: `11`, `12`, `13`, `14`, or `15`.
+- Images are tagged by the major PostgreSQL version supported: `11`, `12`, `13`, `14`,  `15`, or `16`.
 - The `SCHEDULE` variable determines backup frequency. See go-cron schedules documentation [here](http://godoc.org/github.com/robfig/cron#hdr-Predefined_schedules). Omit to run the backup immediately and then exit.
 - If `PASSPHRASE` is provided, the backup will be encrypted using GPG.
 - Run `docker exec <container name> sh backup.sh` to trigger a backup ad-hoc.
