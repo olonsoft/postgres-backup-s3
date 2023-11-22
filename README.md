@@ -8,7 +8,7 @@ This project provides Docker images to periodically back up a PostgreSQL databas
 - Removed `pip3` installation because the next is not needed anymore
 - Removed installation of `awscli`. Instead I used  the built in `apk add --no-cache aws-cli`
 - Also `python3` is not needed anymore
-- Added support for postgres16. Currently only supported on `alpine:edge`
+- Added support for postgresql16-client. Currently only supported on `alpine:edge`
 
 > NOTE: Tested only on `minio` and not on `AWS S3`
 
