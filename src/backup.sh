@@ -3,7 +3,7 @@
 set -eu
 set -o pipefail
 
-source ./env.sh
+source /usr/local/bin/env.sh
 
 echo "Creating backup of $POSTGRES_DATABASE database..."
 pg_dump --format=custom \

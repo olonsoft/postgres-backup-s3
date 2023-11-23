@@ -7,7 +7,7 @@ if [ "$S3_S3V4" = "yes" ]; then
 fi
 
 if [ -z "$SCHEDULE" ]; then
-  sh backup.sh
+  backup.sh
 else
-  echo "${SCHEDULE} /bin/sh backup.sh" > /etc/crontabs/root && crond -f -d 8
+  echo "${SCHEDULE} backup.sh" > /etc/crontabs/root && crond -f -d 8
 fi

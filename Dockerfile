@@ -22,9 +22,12 @@ ENV SCHEDULE ''
 ENV PASSPHRASE ''
 ENV BACKUP_KEEP_DAYS ''
 
-COPY src/run.sh run.sh
-COPY src/env.sh env.sh
-COPY src/backup.sh backup.sh
-COPY src/restore.sh restore.sh
+COPY src/env.sh /usr/local/bin/env.sh
+COPY src/run.sh /usr/local/bin/run.sh
+RUN chmod +x /usr/local/bin/run.sh
+COPY src/backup.sh /usr/local/bin/backup.sh
+RUN chmod +x /usr/local/bin/backup.sh
+COPY src/restore.sh /usr/local/bin/restore.sh
+RUN chmod +x /usr/local/bin/restore.sh
 
-CMD ["sh", "run.sh"]
+CMD ["run.sh"]
